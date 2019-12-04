@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Produto = use('App/Models/Produto')
+
 /**
  * Resourceful controller for interacting with produtos
  */
@@ -17,7 +19,9 @@ class ProdutoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ request, response, view, auth }) {
+    console.log(auth.user)
+    Produto
   }
 
   /**
@@ -30,6 +34,7 @@ class ProdutoController {
    * @param {View} ctx.view
    */
   async create ({ request, response, view }) {
+    console.log("Create")
   }
 
   /**
@@ -41,6 +46,7 @@ class ProdutoController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    console.log("Store")
   }
 
   /**
@@ -53,6 +59,7 @@ class ProdutoController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    console.log("Show")
   }
 
   /**
@@ -65,6 +72,7 @@ class ProdutoController {
    * @param {View} ctx.view
    */
   async edit ({ params, request, response, view }) {
+    console.log("Edit")
   }
 
   /**
@@ -76,6 +84,7 @@ class ProdutoController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    console.log("Update")
   }
 
   /**
@@ -87,6 +96,7 @@ class ProdutoController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    console.log("Delete")
   }
 }
 

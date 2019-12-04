@@ -24,3 +24,6 @@ Route.post('/authenticate', 'AuthController.authenticate');
 // })
 
 Route.get('/app', 'AppController.index').middleware(['auth:jwt'])
+Route.resource('produto', 'ProdutoController')
+      .apiOnly()
+      .middleware('auth:jwt')
