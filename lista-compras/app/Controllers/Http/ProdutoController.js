@@ -20,8 +20,13 @@ class ProdutoController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view, auth }) {
-    console.log(auth.user)
-    Produto
+
+    const produtos = await Produto
+          .query()
+          .where('user_id', '=', auth.user.id)
+          .fetch();
+
+    return produtos;
   }
 
   /**
