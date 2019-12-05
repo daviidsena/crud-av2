@@ -17,13 +17,8 @@ class ProdutoSchema extends Schema {
       table.string('nome').notNullable()
       table.decimal('quantidade').notNullable()
       table.string('preco').notNullable()
-      /**
-       * Nome,
-       * Quantidade,
-       * preco,
-       * id-unidade,
-       * id-categoria
-       */
+      table.integer('categoria_id')
+      table.integer('unidade_id')
       table.timestamps()
     })
   }

@@ -15,7 +15,10 @@ const Factory = use('Factory')
 
 class ProdutoSeeder {
   async run () {
+    await Factory.model("App/Models/User").createMany(4)
     await Factory.model("App/Models/Produto").createMany(1000)
+    await Factory.model("App/Models/Unidade").createMany(20)
+    await Factory.model("App/Models/Categoria").createMany(10)
   }
 }
 
