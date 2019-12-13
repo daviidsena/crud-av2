@@ -19,27 +19,13 @@ class ProdutoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view, auth }) {
-
+  async index({ request, response, view, auth }) {
     const produtos = await Produto
-          .query()
-          .where('user_id', '=', auth.user.id)
-          .fetch();
+      .query()
+      .where('user_id', '=', auth.user.id)
+      .fetch();
 
     return produtos;
-  }
-
-  /**
-   * Render a form to be used for creating a new produto.
-   * GET produtos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-    console.log("Create")
   }
 
   /**
@@ -50,8 +36,13 @@ class ProdutoController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
-    console.log("Store")
+  async store({ request, response, auth }) {
+    var data = request.only(['nome', 'preco', 'quantidade']);
+
+    data = { ...data, user_id: auth.user.id }
+
+    const produto = await Produto.create(data);
+    return produto;
   }
 
   /**
@@ -63,21 +54,12 @@ class ProdutoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-    console.log("Show")
-  }
+  async show({ params, request, response, view }) {
+    const { id } = params;
 
-  /**
-   * Render a form to update an existing produto.
-   * GET produtos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-    console.log("Edit")
+    const produto = await Produto.findOrFail(id);
+
+    return produto;
   }
 
   /**
@@ -88,8 +70,14 @@ class ProdutoController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
-    console.log("Update")
+  async update({ params, request, response }) {
+    const { id } = params;
+
+    const produto = await Produto.findOrFail(id);
+    const data = request.only(['nome', 'preco', 'quantidade']);
+
+    produto.merge(data);
+    await produto.save();
   }
 
   /**
@@ -100,8 +88,11 @@ class ProdutoController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
-    console.log("Delete")
+  async destroy({ params, request, response }) {
+    const { id } = params
+    const produto = await Produto.find(id)
+
+    await produto.delete()
   }
 }
 
